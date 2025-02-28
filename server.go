@@ -18,13 +18,13 @@ var REDIS_URI = ""
 func main() {
 	db, err := NewPostgresSQL(POSTGRES_URI)
 	if err != nil {
-		log.Fatalf("Could not initialize Database connection %s", err)
+		log.Fatalf("Could not initialize Postgres due to: %s", err)
 	}
 	defer db.Close()
 
 	redis, err := NewRedis(REDIS_URI)
 	if err != nil {
-		log.Fatalf("Could not initialize Redis client %s", err)
+		log.Fatalf("Could not initialize Redis due to: %s", err)
 	}
 
 	renderJSON := func(w http.ResponseWriter, val interface{}, statusCode int) {

@@ -16,13 +16,14 @@ type PostgresSQL struct {
 func NewPostgresSQL(URI string) (*PostgresSQL, error) {
 	DBPool, err := pgxpool.Connect(context.Background(), URI)
 	if err != nil {
-		log.Fatalf("Error creating connection DBPool due to %v", err)
+		return nil, err
 	}
 
 	err = DBPool.Ping(context.Background())
 	if err != nil {
-		log.Fatalf("Could not connect to Postgres due to %v", err)
+		return nil, err
 	}
+
 	return &PostgresSQL{DBPool: DBPool}, nil
 }
 

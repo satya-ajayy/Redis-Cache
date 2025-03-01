@@ -3,17 +3,27 @@ package main
 import (
 	// Go Internal Packages
 	"context"
+	"fmt"
 	"log"
 
 	// External Packages
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
+const (
+	DB_USER     = "postgres"
+	DB_PASSWORD = "postgres"
+	DB_NAME     = "postgres"
+	PG_HOST     = "localhost"
+	PG_PORT     = "5432"
+)
+
 type PostgresSQL struct {
 	DBPool *pgxpool.Pool
 }
 
-func NewPostgresSQL(URI string) (*PostgresSQL, error) {
+func NewPostgresSQL() (*PostgresSQL, error) {
+	URI := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", DB_USER, DB_PASSWORD, PG_HOST, PG_PORT, DB_NAME)
 	DBPool, err := pgxpool.Connect(context.Background(), URI)
 	if err != nil {
 		return nil, err
